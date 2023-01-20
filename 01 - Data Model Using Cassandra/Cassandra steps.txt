@@ -1,0 +1,61 @@
+1. Install Jdk 1.8, Python 2.7, unzip apache cassandra
+2. Set Environment Variables
+	JAVA_HOME
+	path : java bin, cassandra bin, python27-scripts
+3. Go to apache cassandra folder in C drive
+   Run the following files
+	cassandra.bat
+	cqlsh.bat
+   Open IDLE 2.7, navigate and open cqlsh.py in cassandra bin
+4. From Run menu select Run Module
+5. If you get warning about utf-8 encoding do the following
+   Type win + r,and then type  INTL.CPL
+   Go to the Administrative tab > Click Change System Locale
+   ALLOW TO RESTART
+6. After the restart,
+   Run the following files
+	cassandra.bat
+	cqlsh.bat
+   Open IDLE 2.7, navigate and open cqlsh.py in cassandra bin
+   From Run menu select Run Module
+7. Create a keyspace
+   CREATE KEYSPACE UDIT WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
+   check using describe
+8. Create EMP table and insert 5 records
+   CREATE TABLE emp(
+   emp_id int PRIMARY KEY,
+   emp_name text,
+   emp_city text,
+   emp_sal varint,
+   emp_phone varint
+   );
+
+  insert into emp (emp_id, emp_name, emp_city, emp_sal, emp_phone) values 
+  (1, 'Nikhil', 'Thane',10000,12345);
+
+  insert into emp (emp_id, emp_name, emp_city, emp_sal, emp_phone) values 
+  (2, 'jayesh', 'Titwala',15000,22345);
+
+  insert into emp (emp_id, emp_name, emp_city, emp_sal, emp_phone) values 
+  (3, 'Shraddha', 'Juhu',18000,33345);
+
+  select * from emp;
+  select * from emp where emp_id = 1;
+  select * from emp where emp_name = 'Nikhil';
+
+9. Creating an Index
+   CREATE INDEX name ON emp (emp_name);
+
+   check by executing the following query
+   select * from emp where emp_name = 'Nikhil';
+
+10. Execute a batch of statements together.
+BEGIN BATCH
+INSERT INTO emp (emp_id, emp_city, emp_name, emp_phone, emp_sal) 
+values(  4,'Sion','Varsha',984845285, 30000);
+UPDATE emp SET emp_sal = 50000 WHERE emp_id =1;
+DELETE emp_city FROM emp WHERE emp_id = 2;
+APPLY BATCH;
+
+check by executing the following query
+   select * from emp;
